@@ -5,7 +5,6 @@
 
 class MyDoubleLinkedList : public MyList {
 public:
-    //MyDoubleLinkedList();
     MyDoubleLinkedList(int, MyDoubleLinkedList*,MyDoubleLinkedList*);
     bool insert(int el, int pos);
     void printList();

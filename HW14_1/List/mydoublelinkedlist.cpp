@@ -2,11 +2,9 @@
 #include <iostream>
 
 
-MyDoubleLinkedList::MyDoubleLinkedList(int el, MyDoubleLinkedList *nx, MyDoubleLinkedList *pv)
+MyDoubleLinkedList::MyDoubleLinkedList(int el, MyDoubleLinkedList *nx, MyDoubleLinkedList *pv) : next(nx), prev(pv)
 {
     head = el;
-    next = nx;
-    prev = pv;
 }
 
 bool MyDoubleLinkedList::insert(int el, int pos)
@@ -58,7 +56,6 @@ int MyDoubleLinkedList::getElementAt(int pos)
         pos--;
         nl = nl->next;
     }
-    //if (pos > 0) {}
     return head;
 }
 

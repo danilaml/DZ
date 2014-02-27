@@ -7,7 +7,10 @@ int main()
 {
     using namespace std;
 
-    MyLinkedList *mlst = new MyLinkedList(1,new MyLinkedList(3,nullptr));
+    MyLinkedList *mlst = new MyLinkedList();
+
+    mlst->insert(3,0);
+    mlst->insert(1,0);
 
     mlst->printList();
     cout << endl << mlst->getElementAt(1) << endl << mlst->length() << endl << endl;

@@ -5,8 +5,7 @@
 
 class MyLinkedList : public MyList {
 public:
-    //MyLinkedList();
-    MyLinkedList(int, MyLinkedList*);
+    MyLinkedList();
     bool insert(int el, int pos);
     void printList();
     int length();
@@ -14,8 +13,12 @@ public:
     bool deleteElementAt(int pos);
     ~MyLinkedList();
 private:
-    //int head;
-    MyLinkedList *next;
+    struct ListElement
+        {
+            int value;
+            ListElement *next;
+        };
+    ListElement *head;
 };
 
 #endif // MYLINKEDLIST_H

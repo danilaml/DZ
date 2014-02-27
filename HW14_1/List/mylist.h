@@ -3,7 +3,6 @@
 
 class MyList {
 public:
-    //MyList() {}
     virtual bool insert(int el, int pos) = 0;
     virtual void printList() = 0;
     virtual int length() = 0;
