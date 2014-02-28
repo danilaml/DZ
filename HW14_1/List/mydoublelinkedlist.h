@@ -5,7 +5,7 @@
 
 class MyDoubleLinkedList : public MyList {
 public:
-    MyDoubleLinkedList(int, MyDoubleLinkedList*,MyDoubleLinkedList*);
+    MyDoubleLinkedList();
     bool insert(int el, int pos);
     void printList();
     int length();
@@ -13,9 +13,13 @@ public:
     bool deleteElementAt(int pos);
     ~MyDoubleLinkedList();
 private:
-    //int head;
-    MyDoubleLinkedList *next;
-    MyDoubleLinkedList *prev;
+    struct ListElement
+        {
+            int value;
+            ListElement *next;
+            ListElement *prev;
+        };
+    ListElement *head;
 };
 
 #endif // MYDOUBLELINKEDLIST_H

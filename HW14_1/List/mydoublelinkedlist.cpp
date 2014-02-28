@@ -2,35 +2,46 @@
 #include <iostream>
 
 
-MyDoubleLinkedList::MyDoubleLinkedList(int el, MyDoubleLinkedList *nx, MyDoubleLinkedList *pv) : next(nx), prev(pv)
+MyDoubleLinkedList::MyDoubleLinkedList() : head(nullptr)
 {
-    head = el;
 }
 
 bool MyDoubleLinkedList::insert(int el, int pos)
 {
-    MyDoubleLinkedList *nl = next;
-    while ((pos > 0) && (nl != nullptr))
+    ListElement *nl = head;
+    if (pos == 0)
+    {
+        ListElement *tmp = new ListElement;
+        tmp->value = el;
+        tmp->next = nl;
+        tmp->prev = nullptr;
+        head = tmp;
+        return true;
+    }
+    while ((pos > 1) && (nl != nullptr))
     {
         pos--;
         nl = nl->next;
     }
-    if (pos > 0)
+    if (pos > 1 || nl == nullptr)
         return false;
     else
     {
-        nl->next = new MyDoubleLinkedList(nl->head, nl->next, nl);
-        nl->head = el;
+        ListElement *tmp = new ListElement;
+        tmp->value = el;
+        tmp->next = nl->next;
+        tmp->prev = nl;
+        nl->next = tmp;
         return true;
     }
 }
 
 void MyDoubleLinkedList::printList()
 {
-    MyDoubleLinkedList *nl = this;
+    ListElement *nl = head;
     while(nl != nullptr)
     {
-        std::cout << nl->head << " ";
+        std::cout << nl->value << " ";
         nl = nl->next;
     }
     std::cout << std::endl;
@@ -38,7 +49,7 @@ void MyDoubleLinkedList::printList()
 
 int MyDoubleLinkedList::length()
 {
-    MyDoubleLinkedList *nl = this;
+    ListElement *nl = head;
     int len = 0;
     while(nl != nullptr)
     {
@@ -50,22 +61,34 @@ int MyDoubleLinkedList::length()
 
 int MyDoubleLinkedList::getElementAt(int pos)
 {
-    MyDoubleLinkedList *nl = next;
+    ListElement *nl = head;
     while ((pos > 0) && (nl != nullptr))
     {
         pos--;
         nl = nl->next;
     }
-    return head;
+    if (pos > 0)
+    {
+       std::cout << "Can't get element, pos is to high";
+       exit(0);
+    }
+    return nl->value;
 }
 
 bool MyDoubleLinkedList::deleteElementAt(int pos)
 {
-    MyDoubleLinkedList *nl = this;
+    if (head == nullptr)
+    {
+        std::cout << "Cannot delete, list is empty";
+        exit(0);
+    }
+    ListElement *nl = head;
     if (pos == 0)
     {
-        *nl = *this->next;
-        nl->prev = nullptr;
+        ListElement *tmp = head->next;
+        tmp->prev = nullptr;
+        delete head;
+        head = tmp;
         return true;
     }
     while ((pos > 1) && (nl != nullptr))
@@ -79,11 +102,11 @@ bool MyDoubleLinkedList::deleteElementAt(int pos)
     {
         if (nl->next != nullptr)
         {
-            MyDoubleLinkedList *temp = nl->next;
+            ListElement *tmp = nl->next;
             nl->next = nl->next->next;
-            nl->next->prev = nl->prev;
-            temp->next = nullptr;
-            delete temp;
+            if(nl->next->next != nullptr)
+                nl->next->next->prev = nl;
+            delete tmp;
             return true;
         }
         else
@@ -93,6 +116,11 @@ bool MyDoubleLinkedList::deleteElementAt(int pos)
 
 MyDoubleLinkedList::~MyDoubleLinkedList()
 {
-    delete next;
+    while (head != nullptr)
+    {
+        ListElement *tmp = head->next;
+        delete head;
+        head = tmp;
+    }
 }
 

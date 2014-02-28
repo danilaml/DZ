@@ -15,7 +15,7 @@ int main()
     mlst->printList();
     cout << endl << mlst->getElementAt(1) << endl << mlst->length() << endl << endl;
 
-    mlst->insert(2,0);
+    mlst->insert(2,1);
 
     mlst->printList();
     cout << endl << mlst->getElementAt(1) << endl << mlst->length() << endl << endl;

@@ -9,19 +9,27 @@ MyLinkedList::MyLinkedList() : head(nullptr)
 bool MyLinkedList::insert(int el, int pos)
 {
     ListElement *nl = head;
-    while ((pos > 0) && (nl != nullptr))
-    {
-        pos--;
-        nl = nl->next;
-    }
-    if (pos > 0)
-        return false;
-    else
+    if (pos == 0)
     {
         ListElement *tmp = new ListElement;
         tmp->value = el;
         tmp->next = nl;
         head = tmp;
+        return true;
+    }
+    while ((pos > 1) && (nl != nullptr))
+    {
+        pos--;
+        nl = nl->next;
+    }
+    if (pos > 1 || nl == nullptr)
+        return false;
+    else
+    {
+        ListElement *tmp = new ListElement;
+        tmp->value = el;
+        tmp->next = nl->next;
+        nl->next = tmp;
         return true;
     }
 }
@@ -67,6 +75,11 @@ int MyLinkedList::getElementAt(int pos)
 
 bool MyLinkedList::deleteElementAt(int pos)
 {
+    if (head == nullptr)
+    {
+        std::cout << "Cannot delete, list is empty";
+        exit(0);
+    }
     ListElement *nl = head;
     if (pos == 0)
     {

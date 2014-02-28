@@ -9,8 +9,6 @@ public:
     virtual int getElementAt(int n) = 0;
     virtual bool deleteElementAt(int n) = 0;
     virtual ~MyList() {}
-protected:
-    int head;
 };
 
 #endif // MYLIST_H
