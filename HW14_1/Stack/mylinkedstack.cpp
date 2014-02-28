@@ -1,79 +1,93 @@
 #include "mylinkedstack.h"
+#include <iostream>
 
-MyLinkedList::MyLinkedList()
+MyLinkedStack::MyLinkedStack() : head(nullptr)
 {
-    elements = new int[DEFAULT_MAX_SIZE];
-    current_size = 0;
 }
 
-MyLinkedList::~MyLinkedList()
+MyLinkedStack::~MyLinkedStack()
 {
-    delete elements;
-}
-
-MyLinkedList::MyLinkedList(int sz)
-{
-    max_size = sz;
-    elements = new int[sz];
-    current_size = 0;
-}
-
-void MyLinkedList::push(int el)
-{
-    if (current_size == max_size)
+    while (head != nullptr)
     {
-        std::cout << "Error: Stack is full!" << std::endl;
-        exit(0);
+        StackElement *tmp = head->next;
+        delete head;
+        head = tmp;
+    }
+}
+
+void MyLinkedStack::push(int el)
+{
+    StackElement *tmp = new StackElement;
+    tmp->value = el;
+    tmp->next = head;
+    head = tmp;
+}
+
+int MyLinkedStack::pop()
+{
+    if (!isEmpty())
+    {
+        StackElement *tmp = head;
+        head = head->next;
+        int res = tmp->value;
+        delete tmp;
+        return res;
     }
     else
     {
-        elements[current_size] = el;
-        current_size++;
-    }
-}
-
-int MyLinkedList::pop()
-{
-    if (current_size == 0)
-    {
-        std::cout << "Error: Stack is empty!" << std::endl;
+        std::cout << "Cannot pop, stack is empty";
         exit(0);
     }
-    else
-    {
-        current_size--;
-        return elements[current_size-1];
-    }
 }
 
-int MyLinkedList::back()
+int MyLinkedStack::back()
 {
-    if (current_size == 0)
+    if(head == nullptr)
     {
-        std::cout << "Error: Stack is empty!" << std::endl;
+        std::cout << "Cannot get back, stack is empty";
         exit(0);
     }
-    else
+    return head->value;
+}
+
+int MyLinkedStack::size()
+{
+    StackElement *tmp = head;
+    int res = 0;
+    while (tmp != nullptr)
     {
-        return elements[current_size-1];
+        tmp = tmp->next;
+        res++;
+    }
+    return res;
+}
+
+void MyLinkedStack::clear()
+{
+    while (head != nullptr)
+    {
+        StackElement *tmp = head->next;
+        delete head;
+        head = tmp;
     }
 }
 
-int MyLinkedList::size()
+void MyLinkedStack::printStack()
 {
-    return current_size;
-}
-
-void MyLinkedList::clear()
-{
-    current_size = 0;
-}
-
-void MyLinkedList::printStack()
-{
-    for (int i = 0; i < current_size; i++)
+    StackElement *nl = head;
+    if(head == nullptr)
+        std::cout << "[]";
+    while(nl != nullptr)
     {
-       std::cout << elements[i] << " | ";
+        std::cout << nl->value << " ";
+        nl = nl->next;
     }
     std::cout << std::endl;
 }
+
+bool MyLinkedStack::isEmpty()
+{
+    return (head == nullptr);
+}
+
+

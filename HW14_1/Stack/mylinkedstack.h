@@ -12,12 +12,16 @@ public:
     int pop();
     int back();
     int size();
+    bool isEmpty();
     void clear();
     void printStack();
 private:
-    MyLinkedStack* next;
-    int head;
-    int current_size;
+    struct StackElement
+        {
+            int value;
+            StackElement *next;
+        };
+    StackElement *head;
 };
 
 #endif // MYLINKEDSTACK_H

@@ -3,8 +3,8 @@
 
 MyArrayStack::MyArrayStack()
 {
-    elements = new int[DEFAULT_MAX_SIZE];
-    current_size = 0;
+    elements = new int[defaultMaxSize];
+    currentSize = 0;
 }
 
 MyArrayStack::~MyArrayStack()
@@ -12,67 +12,72 @@ MyArrayStack::~MyArrayStack()
     delete elements;
 }
 
-MyArrayStack::MyArrayStack(int sz)
+MyArrayStack::MyArrayStack(int initSize)
 {
-    max_size = sz;
-    elements = new int[sz];
-    current_size = 0;
+    maxSize = initSize;
+    elements = new int[initSize];
+    currentSize = 0;
 }
 
 void MyArrayStack::push(int el)
 {
-    if (current_size == max_size)
+    if (currentSize == maxSize)
     {
         std::cout << "Error: Stack is full!" << std::endl;
         exit(0);
     }
     else
     {
-        elements[current_size] = el;
-        current_size++;
+        elements[currentSize] = el;
+        currentSize++;
     }
 }
 
 int MyArrayStack::pop()
 {
-    if (current_size == 0)
+    if (currentSize == 0)
     {
         std::cout << "Error: Stack is empty!" << std::endl;
         exit(0);
     }
     else
     {
-        current_size--;
-        return elements[current_size-1];
+        currentSize--;
+        return elements[currentSize];
     }
 }
 
 int MyArrayStack::back()
 {
-    if (current_size == 0)
+    if (currentSize == 0)
     {
         std::cout << "Error: Stack is empty!" << std::endl;
         exit(0);
     }
     else
     {
-        return elements[current_size-1];
+        return elements[currentSize-1];
     }
 }
 
 int MyArrayStack::size()
 {
-    return current_size;
+    return currentSize;
+}
+
+bool MyArrayStack::isEmpty()
+{
+    return (currentSize == 0);
 }
 
 void MyArrayStack::clear()
 {
-    current_size = 0;
+    currentSize = 0;
 }
 
 void MyArrayStack::printStack()
 {
-    for (int i = 0; i < current_size; i++)
+    for (int i = 0; i < currentSize; i++)
     {
        std::cout << elements[i] << " | ";
     }

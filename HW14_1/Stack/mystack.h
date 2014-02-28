@@ -8,7 +8,9 @@ public:
     virtual int pop() = 0;
     virtual int back() = 0;
     virtual int size() = 0;
+    virtual bool isEmpty() = 0;
     virtual void clear() = 0;
+    virtual void printStack() = 0;
     virtual ~MyStack() {}
 };
 

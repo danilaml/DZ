@@ -7,19 +7,20 @@ class MyArrayStack : public MyStack
 {
 public:
     MyArrayStack();
-    MyArrayStack(int sz);
+    MyArrayStack(int initSize);
     ~MyArrayStack();
     void push(int el);
     int pop();
     int back();
     int size();
+    bool isEmpty();
     void clear();
     void printStack();
 private:
-    const int DEFAULT_MAX_SIZE = 10000;
-    int max_size = DEFAULT_MAX_SIZE;
+    const int defaultMaxSize = 10000;
+    int maxSize = defaultMaxSize;
     int* elements;
-    int current_size;
+    int currentSize;
 };
 
 #endif // MYARRAYSTACK_H
