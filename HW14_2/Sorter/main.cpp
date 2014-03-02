@@ -30,7 +30,7 @@ int main()
 
 void printAr(int ar[], int arlen)
 {
-    for(int i = 0; i < arlen; i++)
+    for (int i = 0; i < arlen; i++)
     {
         cout << ar[i] << ((i == arlen - 1) ? "\n" : " : ");
     }

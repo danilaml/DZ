@@ -20,11 +20,11 @@ int main()
     cout << "Enter number of columns: ";
     cin >> n;
     int** ar = new int*[n];
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         cout << "Enter column #" << i << endl;
         int* tmp = new int[n];
-        for(int j = 0; j < n; j++)
+        for (int j = 0; j < n; j++)
         {
             cin >> tmp[j];
         }
@@ -51,6 +51,7 @@ int main()
     default:
         cout << "Incorrect parameters";
     }
+
     return 0;
 }
 
