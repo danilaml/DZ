@@ -2,8 +2,9 @@
 #define DISPFILE_H
 
 #include "displayer.h"
+#include "dispstream.h"
 
-class DispFile : public Displayer
+class DispFile : public Displayer, public DispStream
 {
 public:
     void display(int** ar, int arlen);

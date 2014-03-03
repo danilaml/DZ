@@ -6,10 +6,12 @@ CONFIG -= qt
 
 SOURCES += main.cpp \
     dispconsole.cpp \
-    dispfile.cpp
+    dispfile.cpp \
+    dispstream.cpp
 
 HEADERS += \
     displayer.h \
     dispconsole.h \
-    dispfile.h
+    dispfile.h \
+    dispstream.h
 
