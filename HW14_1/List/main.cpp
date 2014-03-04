@@ -1,5 +1,5 @@
 #include <iostream>
-#include <MyLinkedList.h>
+#include <mylinkedlist.h>
 
 using namespace std;
 
@@ -25,7 +25,7 @@ int main()
     mlst->printList();
     cout << endl << mlst->getElementAt(1) << endl << mlst->length() << endl << endl;
 
-    //cout << mlst;
+    delete mlst;
 
     return 0;
 }

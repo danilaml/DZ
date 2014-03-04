@@ -15,11 +15,16 @@ public:
     bool isEmpty();
     void clear();
     void printStack();
+
 private:
     struct StackElement
         {
             int value;
             StackElement *next;
+
+            StackElement(int val, StackElement *nxt) : value(val), next(nxt)
+            {
+            }
         };
     StackElement *head;
 };

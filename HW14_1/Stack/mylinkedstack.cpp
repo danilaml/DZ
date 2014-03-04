@@ -17,9 +17,7 @@ MyLinkedStack::~MyLinkedStack()
 
 void MyLinkedStack::push(int el)
 {
-    StackElement *tmp = new StackElement;
-    tmp->value = el;
-    tmp->next = head;
+    StackElement *tmp = new StackElement(el, head);
     head = tmp;
 }
 
@@ -36,7 +34,6 @@ int MyLinkedStack::pop()
     else
     {
         std::cout << "Cannot pop, stack is empty";
-        exit(0);
     }
 }
 
@@ -45,7 +42,6 @@ int MyLinkedStack::back()
     if(head == nullptr)
     {
         std::cout << "Cannot get back, stack is empty";
-        exit(0);
     }
     return head->value;
 }

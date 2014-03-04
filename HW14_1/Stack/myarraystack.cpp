@@ -1,10 +1,12 @@
 #include "myarraystack.h"
 #include <iostream>
 
-MyArrayStack::MyArrayStack()
+MyArrayStack::MyArrayStack() : elements(new int[defaultMaxSize]), currentSize(0)
 {
-    elements = new int[defaultMaxSize];
-    currentSize = 0;
+}
+
+MyArrayStack::MyArrayStack(int initSize) : maxSize(initSize), elements(new int[defaultMaxSize]), currentSize(0)
+{
 }
 
 MyArrayStack::~MyArrayStack()
@@ -12,19 +14,11 @@ MyArrayStack::~MyArrayStack()
     delete elements;
 }
 
-MyArrayStack::MyArrayStack(int initSize)
-{
-    maxSize = initSize;
-    elements = new int[initSize];
-    currentSize = 0;
-}
-
 void MyArrayStack::push(int el)
 {
     if (currentSize == maxSize)
     {
         std::cout << "Error: Stack is full!" << std::endl;
-        exit(0);
     }
     else
     {
@@ -38,7 +32,6 @@ int MyArrayStack::pop()
     if (currentSize == 0)
     {
         std::cout << "Error: Stack is empty!" << std::endl;
-        exit(0);
     }
     else
     {
@@ -52,7 +45,6 @@ int MyArrayStack::back()
     if (currentSize == 0)
     {
         std::cout << "Error: Stack is empty!" << std::endl;
-        exit(0);
     }
     else
     {

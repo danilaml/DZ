@@ -26,6 +26,8 @@ int main()
     const char* s = "10 15 2 * +";
     cout << calculateExpr(s,11,mas);
 
+    delete mas;
+
     return 0;
 }
 

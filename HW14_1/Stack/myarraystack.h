@@ -16,6 +16,7 @@ public:
     bool isEmpty();
     void clear();
     void printStack();
+
 private:
     const int defaultMaxSize = 10000;
     int maxSize = defaultMaxSize;
