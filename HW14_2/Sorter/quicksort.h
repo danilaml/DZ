@@ -5,6 +5,7 @@
 class QuickSort : public Sorter
 {
 public:
+    /// QuckSort implementation of Sorter interface
     void sort(int ar[], int arlen);
 };
 

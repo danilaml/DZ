@@ -4,6 +4,7 @@
 class Sorter
 {
 public:
+    /// Sorter interface with sort method
     virtual void sort(int ar[], int arlen) = 0;
 };
 

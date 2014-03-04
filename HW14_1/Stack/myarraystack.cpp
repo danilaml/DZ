@@ -11,7 +11,7 @@ MyArrayStack::MyArrayStack(int initSize) : maxSize(initSize), elements(new int[d
 
 MyArrayStack::~MyArrayStack()
 {
-    delete elements;
+    delete[] elements;
 }
 
 void MyArrayStack::push(int el)

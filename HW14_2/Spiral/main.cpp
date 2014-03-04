@@ -52,6 +52,10 @@ int main()
         cout << "Incorrect parameters";
     }
 
+    for (int i = 0; i < n; i++)
+        delete[] ar[i];
+    delete[] ar;
+
     return 0;
 }
 

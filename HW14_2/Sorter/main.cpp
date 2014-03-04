@@ -25,6 +25,9 @@ int main()
     srtq->sort(arrq, 7);
     printAr(arrq, 7);
 
+    delete srtb;
+    delete srtq;
+
     return 0;
 }
 

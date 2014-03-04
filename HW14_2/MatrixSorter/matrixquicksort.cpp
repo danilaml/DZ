@@ -2,11 +2,10 @@
 
 void qsort(int** ar, int low, int high)
 {
-    int i, j, m;
-    int* tmp;
-    i = low;
-    j = high;
-    m = ar[(i + j) / 2][0];
+    int* tmp = nullptr;
+    int i = low;
+    int j = high;
+    int m = ar[(i + j) / 2][0];
     do
     {
       while (ar[i][0] < m)

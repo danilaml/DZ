@@ -4,11 +4,11 @@ using namespace std;
 
 void DispStream::displayStream(int** ar, int arlen, ostream& outs)
 {
-    int i, j, step, steps, c;
-    i = j = (arlen / 2) + (arlen % 2) - 1;
-    step = 1;
-    steps = 1;
-    c = 1;
+    int i = (arlen / 2) + (arlen % 2) - 1;
+    int j = i;
+    int step = 1;
+    int steps = 1;
+    int c = 1;
     outs << ar[i][j];
 
     while (steps < arlen * arlen)

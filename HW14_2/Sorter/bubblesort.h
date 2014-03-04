@@ -5,6 +5,7 @@
 class BubbleSort : public Sorter
 {
 public:
+    /// BubbleSort implementation of Sorter interface
     void sort(int ar[], int arlen);
 };
 
