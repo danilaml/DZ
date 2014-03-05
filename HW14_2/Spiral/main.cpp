@@ -40,12 +40,14 @@ int main()
     {
         Displayer* dispf = new DispFile();
         dispf->display(ar, n);
+        delete dispf;
         break;
     }
     case 'c':
     {
         Displayer* dispc = new DispConsole();
         dispc->display(ar, n);
+        delete dispc;
         break;
     }
     default:

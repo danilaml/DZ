@@ -29,6 +29,11 @@ int main()
         printAr(ar[i], n);
     }
 
+    for (int i = 0; i < n; i++)
+        delete[] ar[i];
+    delete[] ar;
+    delete mqs;
+
     return 0;
 }
 
