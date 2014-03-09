@@ -13,8 +13,10 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    exprcalculator.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    exprcalculator.h
 
 FORMS    += mainwindow.ui

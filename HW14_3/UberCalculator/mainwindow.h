@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QObject>
+#include <QSignalMapper>
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +19,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QSignalMapper *signalMapper;
+    bool isResult;
+
+private slots:
+    void exprEntered(const QString &text);
+    void calcExpr();
 };
 
 #endif // MAINWINDOW_H

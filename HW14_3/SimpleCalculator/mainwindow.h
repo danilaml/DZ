@@ -17,7 +17,6 @@ public:
 
 private slots:
     void on_spinBox_valueChanged(int arg1);
-    void recalculate(int larg, int rarg, int actionIndex);
 
     void on_comboBox_currentIndexChanged(int index);
 
