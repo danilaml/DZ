@@ -5,6 +5,7 @@
 class Result
 {
 public:   
+    /// Class with method to recalculate expression based on new args
     static QString recalculate(int larg, int rarg, int actionIndex);
 };
 
