@@ -77,7 +77,7 @@ double ExprCalculator::calculatePostfixExpr(const QString &expr)
 
 QString ExprCalculator::toPostfix(const QString &expr)
 {
-    std::stack<short> stk;
+    std::stack<QChar> stk;
     QString res;
     for(int i = 0; i < expr.length(); i++)
     {
@@ -109,13 +109,13 @@ QString ExprCalculator::toPostfix(const QString &expr)
 
         if (expr[i] == '+' || expr[i] == '-' || expr[i] == '*' || expr[i] == '/')
         {
-            stk.push(expr[i].toLatin1());
+            stk.push(expr[i]);
             continue;
         }
     }
     while(!stk.empty())
     {
-        res.append(QString("%1 ").arg(QChar(stk.top())));
+        res.append(QString("%1 ").arg(stk.top()));
         stk.pop();
     }
 

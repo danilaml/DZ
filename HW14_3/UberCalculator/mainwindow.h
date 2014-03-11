@@ -20,8 +20,6 @@ public:
 private:
     Ui::MainWindow *ui;
     QSignalMapper *signalMapper;
-    //bool isResult;
-    //bool isLastCharAction;
 
 private slots:
     void exprEntered(const QString &text);

@@ -10,7 +10,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     signalMapper = new QSignalMapper(this);
-    //isResult = false;
 
     connect(ui->pushButton_0, SIGNAL(clicked()), signalMapper, SLOT(map()));
     signalMapper->setMapping(ui->pushButton_0, "0");
@@ -57,20 +56,27 @@ void MainWindow::exprEntered(const QString &text)
     if(text[0] < '0')
     {
         QString res = ui->lineEdit->text();
-        if((res.length() > 0) && (res[res.length() - 1]) < '0')
+        if((res.length() > 0) && (res[res.length() - 1] < '0'))
         {
             res[res.length() - 1] = text[0];
             ui->lineEdit->setText(res);
         }
         else
         {
-            ui->lineEdit->setText(ui->lineEdit->text() + text);
+            if(res[res.length() - 1] >= 'a')
+            {
+                return;
+            }
+            else
+            {
+                ui->lineEdit->setText(ui->lineEdit->text() + text);
+            }
         }
     }
     else
     {
         QString res = ui->lineEdit->text();
-        if((res.length() > 0) && (res[res.length() - 1]) >= 'a')
+        if((res.length() > 0) && ((res[res.length() - 1] >= 'a') || res[0] == '0'))
         {
             ui->lineEdit->setText(text);
         }
@@ -83,8 +89,11 @@ void MainWindow::exprEntered(const QString &text)
 
 void MainWindow::calcExpr()
 {
-    QString res;
-    res.setNum(ExprCalculator::calculateExpr(ui->lineEdit->text()));
-    //isResult = true;
+    QString res = ui->lineEdit->text();
+    if((res.length() == 0) || (res[0] == 'i') || (res[0] == 'n'))
+    {
+        return;
+    }
+    res.setNum(ExprCalculator::calculateExpr(res));
     ui->lineEdit->setText(res);
 }
