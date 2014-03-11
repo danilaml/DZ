@@ -73,7 +73,13 @@ int MyDoubleLinkedList::getElementAt(int pos)
     }
     if (pos > 0)
     {
-       std::cout << "Can't get element, pos is to high";
+       std::cout << "Can't get element, pos is to high" << std::endl;
+       return INT_MIN;
+    }
+    if (head == nullptr)
+    {
+       std::cout << "Can't get element, list is empty" << std::endl;
+       return INT_MIN;
     }
     return tempL->value;
 }

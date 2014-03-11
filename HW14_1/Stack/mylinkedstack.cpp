@@ -33,7 +33,8 @@ int MyLinkedStack::pop()
     }
     else
     {
-        std::cout << "Cannot pop, stack is empty";
+        std::cout << "Cannot pop, stack is empty" << std::endl;
+        return INT_MIN;
     }
 }
 
@@ -41,7 +42,8 @@ int MyLinkedStack::back()
 {
     if(head == nullptr)
     {
-        std::cout << "Cannot get back, stack is empty";
+        std::cout << "Cannot get back, stack is empty" << std::endl;
+        return INT_MIN;
     }
     return head->value;
 }

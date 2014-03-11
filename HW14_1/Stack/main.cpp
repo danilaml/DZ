@@ -1,5 +1,6 @@
 #include <iostream>
-#include <myarraystack.h>
+#include "myarraystack.h"
+#include "stacktest.h"
 
 using namespace std;
 
@@ -7,6 +8,11 @@ int calculateExpr(const char* expr, int explen, MyStack *stack);
 
 int main()
 {
+    StackTest stktest;
+    QTest::qExec(&stktest);
+
+    cout << endl;
+
     MyArrayStack *mas = new MyArrayStack(100);
     mas->push(0);
     mas->push(1);
@@ -38,7 +44,7 @@ int calculateExpr(const char* expr, int explen, MyStack *stack)
         if ((expr[i] >= '0') && (expr[i] <= '9'))
         {
             int num = 0;
-            while ((expr[i] >= '0') && (expr[i] <= '9') && i < explen)
+            while ((i < explen) && (expr[i] >= '0') && (expr[i] <= '9'))
             {
                 num = (num * 10) + (expr[i] - '0');
                 i++;

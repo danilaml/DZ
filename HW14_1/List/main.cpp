@@ -1,11 +1,17 @@
 #include <iostream>
 #include <mylinkedlist.h>
+#include "listtest.h"
 
 using namespace std;
 
 int main()
 {
     using namespace std;
+
+    ListTest lsttest;
+    QTest::qExec(&lsttest);
+
+    cout << endl;
 
     MyLinkedList *mlst = new MyLinkedList();
 

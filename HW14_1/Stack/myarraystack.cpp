@@ -32,6 +32,7 @@ int MyArrayStack::pop()
     if (currentSize == 0)
     {
         std::cout << "Error: Stack is empty!" << std::endl;
+        return INT_MIN;
     }
     else
     {
@@ -45,6 +46,7 @@ int MyArrayStack::back()
     if (currentSize == 0)
     {
         std::cout << "Error: Stack is empty!" << std::endl;
+        return INT_MIN;
     }
     else
     {

@@ -2,6 +2,7 @@
 #include "sorter.h"
 #include "bubblesort.h"
 #include "quicksort.h"
+#include "sortertest.h"
 
 using namespace std;
 
@@ -9,6 +10,11 @@ void printAr(int ar[], int arlen);
 
 int main()
 {
+    SorterTest stest;
+    QTest::qExec(&stest);
+
+    cout << endl;
+
     int arrb[5] = {5, 4, 3, 2, 1};
     Sorter* srtb = new BubbleSort();
 

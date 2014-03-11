@@ -1,5 +1,6 @@
 #include <iostream>
 #include "matrixquicksort.h"
+#include "matrixsorttest.h"
 
 using namespace std;
 
@@ -7,6 +8,11 @@ void printAr(int ar[], int arlen);
 
 int main()
 {
+    MatrixSortTest mstest;
+    QTest::qExec(&mstest);
+
+    cout << endl;
+
     int n = 0;
     cout << "Enter number of columns: ";
     cin >> n;
