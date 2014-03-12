@@ -67,10 +67,7 @@ void MainWindow::exprEntered(const QString &text)
             {
                 return;
             }
-            else
-            {
-                ui->lineEdit->setText(ui->lineEdit->text() + text);
-            }
+            ui->lineEdit->setText(ui->lineEdit->text() + text);
         }
     }
     else
