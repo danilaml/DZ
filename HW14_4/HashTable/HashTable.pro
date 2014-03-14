@@ -4,8 +4,10 @@ CONFIG -= app_bundle
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    myhashtable.cpp
+    myhashtable.cpp \
+    hashfunction.cpp
 
 HEADERS += \
-    myhashtable.h
+    myhashtable.h \
+    hashfunction.h
 

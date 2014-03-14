@@ -1,45 +1,32 @@
 #include "myhashtable.h"
 #include <iostream>
 
-MyHashTable::MyHashTable() : ar(new std::list<QString>[1]), size(1), prime(1013)
+MyHashTable::MyHashTable() : hsf(new HashFunction(1013)), ar(new QStringList[1]), size(1)
 {
 }
 
-MyHashTable::MyHashTable(int initSize) : ar(new std::list<QString>[initSize]), size(initSize), prime(1013)
+MyHashTable::MyHashTable(int initSize) : hsf(new HashFunction(1013)), ar(new QStringList[initSize]), size(initSize)
+{
+}
+
+MyHashTable::MyHashTable(int initSize, HashFunction *inithsf) : hsf(inithsf), ar(new QStringList[initSize]), size(initSize)
 {
 }
 
 MyHashTable::~MyHashTable()
 {
-    delete ar;
+    delete[] ar;
 }
-
-int MyHashTable::hash(QString &str) const
-{
-    int res = 0;
-    for (int i = 0; i < str.length(); i++)
-    {
-        res = (res * prime  + str[i].toLatin1()) % size;
-    }
-
-    return res;
-}
-
 
 void MyHashTable::add(QString &str)
 {
     if(contains(str)) return;
-    ar[hash(str)].push_back(str);
+    ar[hsf->hash(str, size)].push_back(str);
 }
 
 bool MyHashTable::contains(QString &str) const
 {
-    for (QString &elem : ar[hash(str)])
-    {
-        if(elem == str)
-            return true;
-    }
-    return false;
+    return ar[hsf->hash(str, size)].contains(str);
 }
 
 int MyHashTable::tableSize() const
@@ -59,7 +46,7 @@ int MyHashTable::loadFactor() const
 
 int MyHashTable::numberOfConflicts() const
 {
-    unsigned int res = 0;
+    int res = 0;
     for(int i = 0; i < size; i++)
     {
         if(ar[i].size() > 1)
@@ -70,7 +57,7 @@ int MyHashTable::numberOfConflicts() const
 
 int MyHashTable::biggestConflitSize() const
 {
-    unsigned int res = 1;
+    int res = 1;
     for(int i = 0; i < size; i++)
     {
         if(ar[i].size() > res)
@@ -79,28 +66,45 @@ int MyHashTable::biggestConflitSize() const
     return res;
 }
 
-void MyHashTable::changeHashFunc(int newConst, int newSize)
+void MyHashTable::changeHashFunc(HashFunction *newhsf)
 {
-    prime = newConst;
-    int sizetmp = size;
-    size = newSize;
-    std::list<QString> *tmp = new std::list<QString>[newSize];
-    for(int i = 0; i < sizetmp; i++)
+    delete hsf;
+    hsf = newhsf;
+    QStringList *tmp = new QStringList[size];
+    for(int i = 0; i < size; i++)
     {
-        while(!ar[i].empty())
+        while(!ar[i].isEmpty())
         {
-            tmp[hash(ar[i].front())].push_back(ar[i].front());
+            tmp[hsf->hash(ar[i].front(), size)].push_back(ar[i].front());
             ar[i].pop_front();
         }
     }
-    delete tmp;
+    delete[] ar;
+    ar = tmp;
+}
+
+void MyHashTable::changeHashSize(int newSize)
+{
+    int sizetmp = size;
+    size = newSize;
+    QStringList *tmp = new QStringList[newSize];
+    for(int i = 0; i < sizetmp; i++)
+    {
+        while(!ar[i].isEmpty())
+        {
+            tmp[hsf->hash(ar[i].front(), size)].push_back(ar[i].front());
+            ar[i].pop_front();
+        }
+    }
+    delete[] ar;
+    ar = tmp;
 }
 
 void MyHashTable::print() const
 {
     for(int i = 0; i < size; i++)
     {
-        if(!ar[i].empty())
+        if(!ar[i].isEmpty())
         {
             for(QString &str : ar[i])
             {

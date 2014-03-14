@@ -2,6 +2,8 @@
 #define MYHASHTABLE_H
 
 #include <QObject>
+#include <QStringList>
+#include "hashfunction.h"
 
 class MyHashTable
 {
@@ -9,6 +11,7 @@ class MyHashTable
 public:
     MyHashTable();
     MyHashTable(int initSize);
+    MyHashTable(int initSize, HashFunction *inithsf);
     ~MyHashTable();
     void add(QString &str);
     bool contains(QString &str) const;
@@ -16,14 +19,14 @@ public:
     int loadFactor() const;
     int numberOfConflicts() const;
     int biggestConflitSize() const;
-    void changeHashFunc(int newConst, int newSize);
+    void changeHashFunc(HashFunction *newhsf);
+    void changeHashSize(int newSize);
     void print() const;
 
 private:
-    int hash(QString &str) const;
-    std::list<QString> *ar;
+    HashFunction *hsf;
+    QStringList *ar;
     int size;
-    int prime;
 };
 
 #endif // MYHASHTABLE_H

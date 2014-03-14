@@ -20,6 +20,8 @@ int main()
 
     mht->print();
 
+    delete mht;
+
     return 0;
 }
 
