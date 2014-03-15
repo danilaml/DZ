@@ -15,13 +15,24 @@ MyHashTable::MyHashTable(int initSize, HashFunction *inithsf) : hsf(inithsf), ar
 
 MyHashTable::~MyHashTable()
 {
+    delete hsf;
     delete[] ar;
 }
 
 void MyHashTable::add(QString &str)
 {
     if(contains(str)) return;
-    ar[hsf->hash(str, size)].push_back(str);
+    ar[hsf->hash(str, size)].append(str);
+}
+
+void MyHashTable::del(QString &str)
+{
+    if(!contains(str))
+    {
+        std::cout << "No such element" << std::endl;
+        return;
+    }
+    ar[hsf->hash(str, size)].removeOne(str);
 }
 
 bool MyHashTable::contains(QString &str) const
@@ -34,7 +45,7 @@ int MyHashTable::tableSize() const
     return size;
 }
 
-int MyHashTable::loadFactor() const
+double MyHashTable::loadFactor() const
 {
     double res = 0;
     for(int i = 0; i < size; i++)
@@ -75,8 +86,8 @@ void MyHashTable::changeHashFunc(HashFunction *newhsf)
     {
         while(!ar[i].isEmpty())
         {
-            tmp[hsf->hash(ar[i].front(), size)].push_back(ar[i].front());
-            ar[i].pop_front();
+            tmp[hsf->hash(ar[i].first(), size)].append(ar[i].first());
+            ar[i].removeFirst();
         }
     }
     delete[] ar;
@@ -92,8 +103,8 @@ void MyHashTable::changeHashSize(int newSize)
     {
         while(!ar[i].isEmpty())
         {
-            tmp[hsf->hash(ar[i].front(), size)].push_back(ar[i].front());
-            ar[i].pop_front();
+            tmp[hsf->hash(ar[i].first(), size)].append(ar[i].first());
+            ar[i].removeFirst();
         }
     }
     delete[] ar;

@@ -14,9 +14,10 @@ public:
     MyHashTable(int initSize, HashFunction *inithsf);
     ~MyHashTable();
     void add(QString &str);
+    void del(QString &str);
     bool contains(QString &str) const;
     int tableSize() const;
-    int loadFactor() const;
+    double loadFactor() const;
     int numberOfConflicts() const;
     int biggestConflitSize() const;
     void changeHashFunc(HashFunction *newhsf);
