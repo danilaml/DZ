@@ -6,6 +6,7 @@
 class HashFunction
 {
 public:
+    /// Class for hash function with fixed prime but variable size
     HashFunction(int initPrime);
     int hash(QString &str, int size) const;
 

@@ -68,7 +68,8 @@ void uiLoop(MyHashTable *mht)
                       "contains {str} - checks if string str belongs to hashtable \n"
                       "stats - shows statistics for current HashTable \n"
                       "changeHash - changes hash function \n"
-                      "help - prints this text \n";
+                      "help - prints this text \n"
+                      "exit - exit programm \n";
 
     QTextStream qout(stdout, QIODevice::WriteOnly);
     QTextStream qin(stdin, QIODevice::ReadOnly);
@@ -86,6 +87,8 @@ void uiLoop(MyHashTable *mht)
         {
             switch (input[0].toLatin1())
             {
+            case 'e':
+                exit(0);
             case 'h':
                 qout << cmdlist << flush;
                 continue;
