@@ -88,7 +88,7 @@ void uiLoop(MyHashTable *mht)
             switch (input[0].toLatin1())
             {
             case 'e':
-                exit(0);
+                return;
             case 'h':
                 qout << cmdlist << flush;
                 continue;
