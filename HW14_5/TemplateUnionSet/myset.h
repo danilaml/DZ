@@ -2,6 +2,7 @@
 #define MYUNIONSET_H
 
 #include <list>
+#include <iostream>
 
 template<typename T>
 class MySet
@@ -12,7 +13,7 @@ public:
 
     void add(T elem)
     {
-        if(!this->contains(elem))
+        if (!this->contains(elem))
             lst.push_back(elem);
     }
 
@@ -57,7 +58,7 @@ public:
 
     void print() const
     {
-        for(const T &el : lst)
+        for (const T &el : lst)
         {
             std::cout << el << " ";
         }

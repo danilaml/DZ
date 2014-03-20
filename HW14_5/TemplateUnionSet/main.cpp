@@ -1,10 +1,14 @@
 #include <iostream>
 #include "myset.h"
+#include "intsettests.h"
 
 using namespace std;
 
 int main()
 {
+    IntSetTests intsettests;
+    QTest::qExec(&intsettests);
+
     MySet<int> msfst;
     msfst.add(1);
     msfst.add(2);

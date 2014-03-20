@@ -1,8 +1,8 @@
+QT += testlib
 TEMPLATE = app
 CONFIG += console
 CONFIG += c++11
 CONFIG -= app_bundle
-CONFIG -= qt
 
 SOURCES += main.cpp \
     num.cpp \
@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     div.cpp \
     sum.cpp \
     sub.cpp \
-    parser.cpp
+    parser.cpp \
+    hierarchycalctest.cpp
 
 HEADERS += \
     node.h \
@@ -19,5 +20,6 @@ HEADERS += \
     div.h \
     sum.h \
     sub.h \
-    parser.h
+    parser.h \
+    hierarchycalctest.h
 
