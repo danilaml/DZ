@@ -1,12 +1,12 @@
-#include "myuniquelist.h"
 #include <iostream>
+#include <mylinkedlist.h>
 
 
-MyUniqueList::MyUniqueList() : MyLinkedList()
+MyLinkedList::MyLinkedList() : head(nullptr)
 {
 }
 
-MyUniqueList::~MyUniqueList()
+MyLinkedList::~MyLinkedList()
 {
     while (head != nullptr)
     {
@@ -16,22 +16,8 @@ MyUniqueList::~MyUniqueList()
     }
 }
 
-bool MyUniqueList::contains(int el) const
+void MyLinkedList::insert(int el, int pos)
 {
-    ListElement *tempL = head;
-    while(tempL != nullptr)
-    {
-        if (tempL->value == el)
-            return true;
-        tempL = tempL->next;
-    }
-    return false;
-}
-
-void MyUniqueList::insert(int el, int pos) throw (MyOutOfRangeException, MyDuplicateException)
-{
-    if (contains(el))
-        throw MyDuplicateException("The element you tried to insert already exists");
     ListElement *tempL = head;
     if (pos == 0)
     {
@@ -45,17 +31,39 @@ void MyUniqueList::insert(int el, int pos) throw (MyOutOfRangeException, MyDupli
         tempL = tempL->next;
     }
     if (pos > 1 || tempL == nullptr)
-    {
-        throw MyOutOfRangeException("Can't insert because pos > len");
-    }
+        return;
     else
     {
         ListElement *tmp = new ListElement(el, tempL->next);
         tempL->next = tmp;
+        return;
     }
 }
 
-int MyUniqueList::getElementAt(int pos) const throw (MyOutOfRangeException, MyEmptyListException)
+void MyLinkedList::printList() const
+{
+    ListElement *tempL = head;
+    while(tempL != nullptr)
+    {
+        std::cout << tempL->value << " ";
+        tempL = tempL->next;
+    }
+    std::cout << std::endl;
+}
+
+int MyLinkedList::length() const
+{
+    ListElement *tempL = head;
+    int len = 0;
+    while(tempL != nullptr)
+    {
+        len++;
+        tempL = tempL->next;
+    }
+    return len;
+}
+
+int MyLinkedList::getElementAt(int pos) const
 {
     ListElement *tempL = head;
     while ((pos > 0) && (tempL != nullptr))
@@ -65,20 +73,23 @@ int MyUniqueList::getElementAt(int pos) const throw (MyOutOfRangeException, MyEm
     }
     if (pos > 0)
     {
-       throw MyOutOfRangeException("Can't get element, pos is to high");
+       std::cout << "Can't get element, pos is to high" << std::endl;
+       return INT_MIN;
     }
     if (head == nullptr)
     {
-       throw MyEmptyListException("Can't get element, list is empty");
+       std::cout << "Can't get element, list is empty" << std::endl;
+       return INT_MIN;
     }
     return tempL->value;
 }
 
-void MyUniqueList::deleteElementAt(int pos) throw (MyOutOfRangeException, MyEmptyListException)
+void MyLinkedList::deleteElementAt(int pos)
 {
     if (head == nullptr)
     {
-        throw MyEmptyListException("Can't delete, list is empty");
+        std::cout << "Cannot delete, list is empty" << std::endl;
+        return;
     }
     ListElement *tempL = head;
     if (pos == 0)
@@ -94,7 +105,7 @@ void MyUniqueList::deleteElementAt(int pos) throw (MyOutOfRangeException, MyEmpt
         tempL = tempL->next;
     }
     if (pos > 1)
-        throw MyOutOfRangeException("Can't delete, pos is too high");
+        return;
     else
     {
         if (tempL->next != nullptr)
@@ -102,8 +113,9 @@ void MyUniqueList::deleteElementAt(int pos) throw (MyOutOfRangeException, MyEmpt
             ListElement *tmp = tempL->next;
             tempL->next = tempL->next->next;
             delete tmp;
+            return;
         }
         else
-            throw MyOutOfRangeException("Can't delete, pos is too high");
+            return;
     }
 }

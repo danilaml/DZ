@@ -1,32 +1,21 @@
 #ifndef MYUNIQUELIST_H
 #define MYUNIQUELIST_H
 
-#include "myexception.h"
+#include "myoutofrangeexception.h"
+#include "myemptylistexception.h"
+#include "myduplicateexception.h"
+#include "mylinkedlist.h"
 
-class MyUniqueList
+/// Class that implements linked list with unique elements
+class MyUniqueList : public MyLinkedList
 {
-    /// Class that implements linked list with unique elements
 public:
     MyUniqueList();
     ~MyUniqueList();
     bool contains(int el) const;
-    void insert(int el, int pos) throw (MyException);
-    void printList() const;
-    int length() const;
-    int getElementAt(int pos) const throw (MyException);
-    void deleteElementAt(int pos) throw (MyException);
-
-private:
-    struct ListElement
-    {
-        int value;
-        ListElement *next;
-
-        ListElement(int val, ListElement *nxt) : value(val), next(nxt)
-        {
-        }
-    };
-    ListElement *head;
+    void insert(int el, int pos) throw (MyOutOfRangeException, MyDuplicateException);
+    int getElementAt(int pos) const throw (MyOutOfRangeException, MyEmptyListException);
+    void deleteElementAt(int pos) throw (MyOutOfRangeException, MyEmptyListException);
 };
 
 #endif // MYUNIQUELIST_H

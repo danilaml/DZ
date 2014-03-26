@@ -28,10 +28,11 @@ private slots:
         try
         {
             mul->getElementAt(0);
+            QFAIL("No exception thrown");
         }
         catch (const MyException &exec)
         {
-            QCOMPARE(exec.message, "Can't get element, list is empty");
+            QCOMPARE(exec.get(), "Can't get element, list is empty");
         }
     }
 
@@ -43,7 +44,7 @@ private slots:
         }
         catch (const MyException &exec)
         {
-            std::cout << exec.message << std::endl;
+            std::cout << exec.get() << std::endl;
         }
 
         QVERIFY(mul->length() == 1);
@@ -58,7 +59,7 @@ private slots:
         }
         catch (const MyException &exec)
         {
-            std::cout << exec.message << std::endl;
+            std::cout << exec.get() << std::endl;
         }
 
         QVERIFY(!mul->contains(2));

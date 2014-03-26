@@ -1,11 +1,14 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
+/// Basic class for exception with error message
 class MyException
 {
-    /// Basic class for exception with error message
 public:
     MyException(const char* msg);
+    const char* get() const;
+
+private:
     const char* const message;
 };
 
