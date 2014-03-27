@@ -1,10 +1,13 @@
 #include <iostream>
+#include "myshareptrtest.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
+    MySharePtrTest msptest;
+    QTest::qExec(&msptest);
+
     return 0;
 }
 
