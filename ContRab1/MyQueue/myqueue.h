@@ -11,9 +11,9 @@ class MyQueue
 public:
     void enqueue(T val, int priority)
     {
-        for(QueueElement pr : lst)
+        for (QueueElement pr : lst)
         {
-            if(priority < pr.prior)
+            if (priority < pr.prior)
             {
                 lst.push_front(QueueElement(val, priority));
                 return;
@@ -25,7 +25,7 @@ public:
 
     T dequeue() throw(MyEmptyException)
     {
-        if(lst.size() == 0)
+        if (lst.size() == 0)
             throw (MyEmptyException());
         T tmp = lst.back().val;
         lst.pop_back();
@@ -34,7 +34,7 @@ public:
 
     bool contains(int val)
     {
-        for(QueueElement el : lst)
+        for (QueueElement el : lst)
         {
             if(val == el.val)
                 return true;
