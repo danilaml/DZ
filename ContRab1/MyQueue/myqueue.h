@@ -26,7 +26,7 @@ public:
     T dequeue() throw(MyEmptyException)
     {
         if(lst.size() == 0)
-            throw (new MyEmptyException());
+            throw (MyEmptyException());
         T tmp = lst.back().val;
         lst.pop_back();
         return tmp;

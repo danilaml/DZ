@@ -45,10 +45,15 @@ private slots:
             mq.dequeue();
             QFAIL("No exception thrown with empty queue");
         }
-        catch (...)
+        catch (MyEmptyException)
         {
 
         }
+        catch (...)
+        {
+            QFAIL("Unexpected exception");
+        }
+
     }
 };
 
