@@ -1,7 +1,7 @@
 #ifndef MYQUEUE_H
 #define MYQUEUE_H
 
-#include <list>
+#include <QList>
 #include "myemptyexception.h"
 
 /// Template for basic implementation of queue with priorities
@@ -9,20 +9,24 @@ template<typename T>
 class MyQueue
 {
 public:
+    /// Method that adds element 'val' to the queue with priority = 'priority'.
     void enqueue(T val, int priority)
     {
         for (QueueElement pr : lst)
         {
+            int i = 0;
             if (priority < pr.prior)
             {
-                lst.push_front(QueueElement(val, priority));
+                lst.insert(i, QueueElement(val, priority));
                 return;
             }
+            i++;
         }
         lst.push_front(QueueElement(val, priority));
         return;
     }
 
+    /// Method that gets element with highest priority and deletes it from the queue.
     T dequeue() throw(MyEmptyException)
     {
         if (lst.size() == 0)
@@ -32,6 +36,7 @@ public:
         return tmp;
     }
 
+    /// Checks if element 'val' is already in queue
     bool contains(int val)
     {
         for (QueueElement el : lst)
@@ -53,7 +58,7 @@ private:
         int prior;
     };
 
-    std::list<QueueElement> lst;
+    QList<QueueElement> lst;
 };
 
 #endif // MYQUEUE_H

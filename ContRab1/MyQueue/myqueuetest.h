@@ -27,8 +27,8 @@ private slots:
     void dequeueTest()
     {
         MyQueue<int> mq;
-        mq.enqueue(1,  1);
-        mq.enqueue(2,0);
+        mq.enqueue(1, 1);
+        mq.enqueue(2, 0);
 
         try
         {
