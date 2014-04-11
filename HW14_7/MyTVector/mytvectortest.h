@@ -16,41 +16,41 @@ private slots:
 
     void copyTest()
     {
-        MyTVector<4> mtv({1, 2, 3, 4});
-        MyTVector<4> copy(mtv);
+        MyTVector<int, 4> mtv({1, 2, 3});
+        MyTVector<int, 4> copy(mtv);
 
         QCOMPARE(mtv, copy);
     }
 
     void isNullVectorTest()
     {
-        MyTVector<3> mtvf({1, 2, 3});
+        MyTVector<int, 3> mtvf({1, 2, 3});
         QVERIFY(!mtvf.isNullVector());
 
-        MyTVector<3> mtvs({0, 0, 0});
+        MyTVector<int, 3> mtvs({0, 0, 0});
         QVERIFY(mtvs.isNullVector());
     }
 
     void scalarProductTest()
     {
-        MyTVector<3> mtv({1, 2, 3});
+        MyTVector<int, 3> mtv({1, 2, 3});
         QCOMPARE(mtv.scalarProduct(mtv), 14);
     }
 
     void equalsTest()
     {
-        MyTVector<5> mtv({1, 2, 3, 4, 5});
+        MyTVector<int, 5> mtv({1, 2, 3, 4, 5});
 
         QVERIFY(mtv == mtv);
     }
 
     void plusminTest()
     {
-        MyTVector<3> mtvf({1, 2, 3});
-        MyTVector<3> mtvs({0, 2, 0});
+        MyTVector<int, 3> mtvf({1, 2, 3});
+        MyTVector<int, 3> mtvs({0, 2, 0});
 
-        QCOMPARE(mtvf + mtvs, MyTVector<3>({1, 4, 3}));
-        QCOMPARE(mtvf - mtvs, MyTVector<3>({1, 0, 3}));
+        QCOMPARE(mtvf + mtvs, (MyTVector<int, 3>({1, 4, 3})));
+        QCOMPARE(mtvf - mtvs, (MyTVector<int, 3>({1, 0, 3})));
     }
 
 };
