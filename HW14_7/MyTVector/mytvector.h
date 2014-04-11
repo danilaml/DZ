@@ -8,17 +8,17 @@ using namespace std;
 
 /// @brief Basic vector template
 /// @tparam dim dimension of vector
-template<typename T, int dim>
+template<int dim>
 class MyTVector
 {
 public:
-    MyTVector() : vec(vector<T>(dim, 0))
+    MyTVector() : vec(vector<double>(dim, 0))
     {
     }
 
-    MyTVector(vector<T> const &vect) : vec(vect)
+    MyTVector(vector<double> const &vect) : vec(vect)
     {
-        vec.resize(dim);
+        vec.resize(dim, 0);
     }
 
     MyTVector(MyTVector const &mtv) : vec(mtv.vec)
@@ -28,19 +28,19 @@ public:
     bool isNullVector() const;
     int scalarProduct(MyTVector const &mtv) const;
     void printVector() const;
-    T at(int n) const;
+    double at(int n) const;
     MyTVector operator+(MyTVector const &rightv);
     MyTVector operator-(MyTVector const &rightv);
     bool operator==(MyTVector const &rightv) const;
 
 private:
-    vector<T> vec;
+    vector<double> vec;
 
 };
 
 /// Checks if vector == 0
-template<typename T, int dim>
-bool MyTVector<T, dim>::isNullVector() const
+template<int dim>
+bool MyTVector<dim>::isNullVector() const
 {
     for (int i = 0; i < dim; i++)
     {
@@ -51,10 +51,10 @@ bool MyTVector<T, dim>::isNullVector() const
 }
 
 /// Returns scalar (dot) product of 'this' and given MyTVector
-template<typename T, int dim>
-int MyTVector<T, dim>::scalarProduct(MyTVector const &mtv) const
+template<int dim>
+int MyTVector<dim>::scalarProduct(MyTVector const &mtv) const
 {
-    T res = 0;
+    double res = 0;
     for (int i = 0; i < dim; i++)
     {
         res += vec[i] * mtv.vec[i];
@@ -63,8 +63,8 @@ int MyTVector<T, dim>::scalarProduct(MyTVector const &mtv) const
 }
 
 /// Prints this vector
-template<typename T, int dim>
-void MyTVector<T, dim>::printVector() const
+template<int dim>
+void MyTVector<dim>::printVector() const
 {
     cout << "( ";
     for (int i = 0; i < dim - 1; i++)
@@ -75,16 +75,16 @@ void MyTVector<T, dim>::printVector() const
 }
 
 /// Returns nth element of vector
-template<typename T, int dim>
-T MyTVector<T, dim>::at(int n) const
+template<int dim>
+double MyTVector<dim>::at(int n) const
 {
     return vec.at(n);
 }
 
-template<typename T, int dim>
-MyTVector<T, dim> MyTVector<T, dim>::operator+(MyTVector const &rightv)
+template<int dim>
+MyTVector<dim> MyTVector<dim>::operator+(MyTVector const &rightv)
 {
-    vector<T> vect(dim);
+    vector<double> vect(dim);
     for (int i = 0; i < dim; i++)
     {
         vect[i] = vec[i] + rightv.vec[i];
@@ -92,10 +92,10 @@ MyTVector<T, dim> MyTVector<T, dim>::operator+(MyTVector const &rightv)
     return (MyTVector(vect));
 }
 
-template<typename T, int dim>
-MyTVector<T, dim> MyTVector<T, dim>::operator-(MyTVector const &rightv)
+template<int dim>
+MyTVector<dim> MyTVector<dim>::operator-(MyTVector const &rightv)
 {
-    vector<T> vect(dim);
+    vector<double> vect(dim);
     for (int i = 0; i < dim; i++)
     {
         vect[i] = vec[i] - rightv.vec[i];
@@ -103,8 +103,8 @@ MyTVector<T, dim> MyTVector<T, dim>::operator-(MyTVector const &rightv)
     return (MyTVector(vect));
 }
 
-template<typename T, int dim>
-bool MyTVector<T, dim>::operator==(MyTVector const &rightv) const
+template<int dim>
+bool MyTVector<dim>::operator==(MyTVector const &rightv) const
 {
     for (int i = 0; i < dim; i++)
     {
