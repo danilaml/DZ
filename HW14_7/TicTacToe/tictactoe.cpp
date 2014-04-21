@@ -91,6 +91,16 @@ void TicTacToe::stateChanged(int pos)
             restart();
             return;
         }
+        else if (turn + 1 == boardSize * boardSize)
+        {
+            QMessageBox msgBox;
+            msgBox.setWindowTitle("Draw!");
+            msgBox.setText("The game will now restart");
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+            restart();
+            return;
+        }
         turn++;
         emit newTurn(turn);
      }

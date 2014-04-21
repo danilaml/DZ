@@ -1,6 +1,5 @@
 #include "sizedialog.h"
 #include "ui_sizedialog.h"
-#include <QDebug>
 
 SizeDialog::SizeDialog(QWidget *parent) :
     QDialog(parent),

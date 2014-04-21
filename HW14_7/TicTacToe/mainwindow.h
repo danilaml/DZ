@@ -7,6 +7,8 @@ namespace Ui {
 class MainWindow;
 }
 
+
+/// MainWindow, has TicTacToe as CentralWidget
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

@@ -4,7 +4,6 @@
 #include "ui_mainwindow.h"
 #include "tictactoe.h"
 #include "sizedialog.h"
-#include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,7 +34,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::turnChanged(int turn)
 {
-    setWindowTitle(windowTitle().replace(21, windowTitle().length() - 21, QString::number(turn)));
+    setWindowTitle(windowTitle().replace(21, windowTitle().length() - 21, " " + QString::number(turn)));
 }
 
 void MainWindow::changeBoardSize()
