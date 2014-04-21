@@ -30,6 +30,8 @@ private slots:
 
 private:
     bool checkForWin(int i, int j) const;
+    bool checkVerticalHorizontal(int i, int j, int len) const;
+    bool checkDiagonal(int i, int j, int len) const;
 
     enum states { Nothing, Cross, Naught };
     Ui::TicTacToe *ui;

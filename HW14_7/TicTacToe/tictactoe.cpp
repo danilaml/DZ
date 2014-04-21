@@ -161,32 +161,77 @@ void TicTacToe::resizeBoard(int sz)
 
 bool TicTacToe::checkForWin(int i, int j) const
 {
+      if (checkVerticalHorizontal(i, j, 3))
+          return true;
+      else if (checkDiagonal(i, j, 3))
+          return true;
+      else
+          return false;
+}
+
+bool TicTacToe::checkVerticalHorizontal(int i, int j, int len) const
+{
+    bool res = true;
     states current = state[i][j];
-    if ((i + 2) < boardSize && current == state[i + 1][j] && current == state[i + 2][j])
-        return true;
-    else if ((i + 1) < boardSize && (i - 1) >= 0 && state[i - 1][j] == current && current == state[i + 1][j])
-        return true;
-    else if ((i - 2) >= 0 && state[i - 2][j] == current && current == state[i - 1][j])
-        return true;
-    else if ((j + 2) < boardSize && state[i][j + 1] == current  && current == state[i][j + 2])
-        return true;
-    else if ((j + 1) < boardSize && (j - 1) >= 0 && state[i][j - 1] == current && current == state[i][j + 1])
-        return true;
-    else if ((j - 2) >= 0 && state[i][j - 2] == current && current == state[i][j - 1])
-        return true; // Vertical and horizontal cases
-    else if ((i + 2) < boardSize && (j + 2) < boardSize && current == state[i + 1][j + 1] && current == state[i + 2][j + 2])
-        return true;
-    else if ((i + 1) < boardSize && (j + 1) < boardSize && (i - 1) >= 0 && (j - 1) >= 0 &&
-             state[i - 1][j - 1] == current && current == state[i + 1][j + 1])
-        return true;
-    else if ((i - 2) >= 0 && (j - 2) >= 0 && state[i - 2][j - 2] == current && current == state[i - 1][j - 1])
-        return true;
-    else if ((i - 2) >= 0 && (j + 2) < boardSize && state[i - 1][j + 1] == current && current == state[i - 2][j + 2])
-        return true;
-    else if ((i - 1) >= 0 && (j - 1) >= 0 && (i + 1) < boardSize && (j + 1) < boardSize && state[i - 1][j + 1] == current && current == state[i + 1][j - 1])
-        return true;
-    else if ((i + 2) < boardSize && (j - 2) >= 0 && state[i + 1][j - 1] == current && current == state[i + 2][j - 2])
-        return true; // diagonal cases
-    else
-        return false;
+
+    for (int k = 0; k < len; k++)
+    {
+        if ((i - len + k + 1 < 0) || (i + k) >= boardSize)
+            continue;
+        for (int n = - len + k + 1; n < k + 1; n++)
+        {
+            res = res && state[i + n][j] == current;
+        }
+        if (res)
+            return true;
+    }
+
+    for (int k = 0; k < len; k++)
+    {
+        if ((j - len + k + 1 < 0) || (j + k) >= boardSize)
+            continue;
+        for (int n = - len + k + 1; n < k + 1; n++)
+        {
+            res = res && state[i][j + n] == current;
+        }
+        if (res)
+            return true;
+    }
+
+    return false;
+}
+
+
+bool TicTacToe::checkDiagonal(int i, int j, int len) const
+{
+    bool res = true;
+    states current = state[i][j];
+
+    for (int k = 0; k < len; k++)
+    {
+        if ((i - len + k + 1 < 0) || (i + k) >= boardSize ||
+                (j - len + k + 1 < 0) || (j + k) >= boardSize)
+            continue;
+        for (int n = - len + k + 1; n < k + 1; n++)
+        {
+            res = res && state[i + n][j + n] == current;
+        }
+        if (res)
+            return true;
+    }
+
+    for (int k = 0; k < len; k++)
+    {
+        if ((i - len + k + 1 < 0) || (i + k) >= boardSize ||
+                (j - k < 0) || (j + len - k - 1) >= boardSize)
+            continue;
+        for (int n = - len + k + 1; n < k + 1; n++)
+        {
+            res = res && state[i + n][j - n] == current;
+        }
+        if (res)
+            return true;
+    }
+
+    return false;
 }
