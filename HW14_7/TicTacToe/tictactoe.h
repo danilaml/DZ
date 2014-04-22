@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QVector>
 #include <QSignalMapper>
+#include <QGridLayout>
 
 namespace Ui {
 class TicTacToe;
@@ -32,6 +33,8 @@ private:
     bool checkForWin(int i, int j) const;
     bool checkVerticalHorizontal(int i, int j, int len) const;
     bool checkDiagonal(int i, int j, int len) const;
+    void showMsgBox(QString const &title, QString const &text);
+    void setupButtons();
 
     enum states { Nothing, Cross, Naught };
     Ui::TicTacToe *ui;

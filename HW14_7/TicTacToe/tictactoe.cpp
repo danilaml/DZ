@@ -1,6 +1,5 @@
 #include "tictactoe.h"
 #include "ui_tictactoe.h"
-#include <QGridLayout>
 #include <QMessageBox>
 
 TicTacToe::TicTacToe(QWidget *parent) :
@@ -12,27 +11,7 @@ TicTacToe::TicTacToe(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    qsm = new QSignalMapper(this);
-
-    QGridLayout *mainLayout = new QGridLayout();
-    for (int i = 0; i < 3 * 3; i++)
-    {
-        state[i % 3][i / 3] = Nothing;
-        QPushButton *tmp = new QPushButton(" ", this);
-        buttons[i] = tmp;
-        tmp->setMinimumSize(30, 30);
-        QFont font = tmp->font();
-        font.setPointSize(16);
-        tmp->setFont(font);
-        tmp->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-        connect(tmp, SIGNAL(clicked()), qsm, SLOT(map()));
-        qsm->setMapping(tmp, i);
-        mainLayout->addWidget(tmp, i % 3, i / 3);
-    }
-
-    connect(qsm, SIGNAL(mapped(int)), this, SLOT(stateChanged(int)));
-
-    setLayout(mainLayout);
+    setupButtons();
 }
 
 TicTacToe::TicTacToe(int bSize, QWidget *parent) :
@@ -45,29 +24,7 @@ TicTacToe::TicTacToe(int bSize, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    qsm = new QSignalMapper(this);
-
-    QGridLayout *mainLayout = new QGridLayout();
-    for (int i = 0; i < bSize * bSize; i++)
-    {
-        state[i % bSize][i / bSize] = Nothing;
-        QPushButton *tmp = new QPushButton(" ", this);
-        buttons[i] = tmp;
-
-        tmp->setMinimumSize(30, 30);
-        QFont font = tmp->font();
-        font.setPointSize(16);
-        tmp->setFont(font);
-        tmp->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-        connect(tmp, SIGNAL(clicked()), qsm, SLOT(map()));
-        qsm->setMapping(tmp, i);
-        mainLayout->addWidget(tmp, i % bSize, i / bSize);
-    }
-
-    connect(qsm, SIGNAL(mapped(int)), this, SLOT(stateChanged(int)));
-
-    setLayout(mainLayout);
+    setupButtons();
 }
 
 TicTacToe::~TicTacToe()
@@ -83,21 +40,13 @@ void TicTacToe::stateChanged(int pos)
         state[pos % boardSize][pos / boardSize] = turn % 2 == 0 ? Cross : Naught;
         if (checkForWin(pos % boardSize, pos / boardSize))
         {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle(turn % 2 == 0 ? "X won!" : "O won!");
-            msgBox.setText("Congratulations!");
-            msgBox.setDefaultButton(QMessageBox::Ok);
-            msgBox.exec();
+            showMsgBox(turn % 2 == 0 ? "X won!" : "O won!", "Congratulations!");
             restart();
             return;
         }
         else if (turn + 1 == boardSize * boardSize)
         {
-            QMessageBox msgBox;
-            msgBox.setWindowTitle("Draw!");
-            msgBox.setText("The game will now restart");
-            msgBox.setDefaultButton(QMessageBox::Ok);
-            msgBox.exec();
+            showMsgBox("Draw!", "The game will now restart");
             restart();
             return;
         }
@@ -131,42 +80,17 @@ void TicTacToe::resizeBoard(int sz)
 
     boardSize = sz;
     turn = 0;
-    state = QVector<QVector<states>>(sz, QVector<states>(sz));
-    buttons = QVector<QPushButton*>(sz * sz);
+    state = QVector<QVector<states>>(boardSize, QVector<states>(boardSize));
+    buttons = QVector<QPushButton*>(boardSize * boardSize);
 
-    qsm = new QSignalMapper(this);
-
-    QGridLayout *mainLayout = new QGridLayout();
-    for (int i = 0; i < sz * sz; i++)
-    {
-        state[i % sz][i / sz] = Nothing;
-        QPushButton *tmp = new QPushButton(" ", this);
-        buttons[i] = tmp;
-
-        tmp->setMinimumSize(30, 30);
-        QFont font = tmp->font();
-        font.setPointSize(16);
-        tmp->setFont(font);
-        tmp->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-
-        connect(tmp, SIGNAL(clicked()), qsm, SLOT(map()));
-        qsm->setMapping(tmp, i);
-        mainLayout->addWidget(tmp, i % sz, i / sz);
-    }
-
-    connect(qsm, SIGNAL(mapped(int)), this, SLOT(stateChanged(int)));
-
-    setLayout(mainLayout);
+    setupButtons();
 }
 
 bool TicTacToe::checkForWin(int i, int j) const
 {
       if (checkVerticalHorizontal(i, j, 3))
           return true;
-      else if (checkDiagonal(i, j, 3))
-          return true;
-      else
-          return false;
+      else return (checkDiagonal(i, j, 3));
 }
 
 bool TicTacToe::checkVerticalHorizontal(int i, int j, int len) const
@@ -234,4 +158,40 @@ bool TicTacToe::checkDiagonal(int i, int j, int len) const
     }
 
     return false;
+}
+
+void TicTacToe::showMsgBox(const QString &title, const QString &text)
+{
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(title);
+    msgBox.setText(text);
+    msgBox.setDefaultButton(QMessageBox::Ok);
+    msgBox.exec();
+}
+
+void TicTacToe::setupButtons()
+{
+    qsm = new QSignalMapper(this);
+
+    QGridLayout *mainLayout = new QGridLayout();
+    for (int i = 0; i < boardSize * boardSize; i++)
+    {
+        state[i % boardSize][i / boardSize] = Nothing;
+        QPushButton *tmp = new QPushButton(" ", this);
+        buttons[i] = tmp;
+
+        tmp->setMinimumSize(30, 30);
+        QFont font = tmp->font();
+        font.setPointSize(16);
+        tmp->setFont(font);
+        tmp->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+
+        connect(tmp, SIGNAL(clicked()), qsm, SLOT(map()));
+        qsm->setMapping(tmp, i);
+        mainLayout->addWidget(tmp, i % boardSize, i / boardSize);
+    }
+
+    connect(qsm, SIGNAL(mapped(int)), this, SLOT(stateChanged(int)));
+
+    setLayout(mainLayout);
 }
