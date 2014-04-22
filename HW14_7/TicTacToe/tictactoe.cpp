@@ -108,7 +108,7 @@ bool TicTacToe::checkVerticalHorizontal(int i, int j, int len) const
         }
         if (res)
             return true;
-    }
+    } // Checks all posible vertical combinations
 
     for (int k = 0; k < len; k++)
     {
@@ -120,7 +120,7 @@ bool TicTacToe::checkVerticalHorizontal(int i, int j, int len) const
         }
         if (res)
             return true;
-    }
+    } // Checks all posible horizontal combinations
 
     return false;
 }
@@ -142,7 +142,7 @@ bool TicTacToe::checkDiagonal(int i, int j, int len) const
         }
         if (res)
             return true;
-    }
+    } // Checks all posible diagonal combinations from left to right
 
     for (int k = 0; k < len; k++)
     {
@@ -155,7 +155,7 @@ bool TicTacToe::checkDiagonal(int i, int j, int len) const
         }
         if (res)
             return true;
-    }
+    } // Checks all posible diagonal combinations from right to left
 
     return false;
 }
