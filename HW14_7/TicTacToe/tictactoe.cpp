@@ -100,6 +100,7 @@ bool TicTacToe::checkVerticalHorizontal(int i, int j, int len) const
 
     for (int k = 0; k < len; k++)
     {
+        res = true;
         if ((i - len + k + 1 < 0) || (i + k) >= boardSize)
             continue;
         for (int n = - len + k + 1; n < k + 1; n++)
@@ -108,10 +109,11 @@ bool TicTacToe::checkVerticalHorizontal(int i, int j, int len) const
         }
         if (res)
             return true;
-    } // Checks all posible vertical combinations
+    } // Checks all possible vertical combinations
 
     for (int k = 0; k < len; k++)
     {
+        res = true;
         if ((j - len + k + 1 < 0) || (j + k) >= boardSize)
             continue;
         for (int n = - len + k + 1; n < k + 1; n++)
@@ -120,7 +122,7 @@ bool TicTacToe::checkVerticalHorizontal(int i, int j, int len) const
         }
         if (res)
             return true;
-    } // Checks all posible horizontal combinations
+    } // Checks all possible horizontal combinations
 
     return false;
 }
@@ -133,6 +135,7 @@ bool TicTacToe::checkDiagonal(int i, int j, int len) const
 
     for (int k = 0; k < len; k++)
     {
+        res = true;
         if ((i - len + k + 1 < 0) || (i + k) >= boardSize ||
                 (j - len + k + 1 < 0) || (j + k) >= boardSize)
             continue;
@@ -142,10 +145,11 @@ bool TicTacToe::checkDiagonal(int i, int j, int len) const
         }
         if (res)
             return true;
-    } // Checks all posible diagonal combinations from left to right
+    } // Checks all possible diagonal combinations from left to right
 
     for (int k = 0; k < len; k++)
     {
+        res = true;
         if ((i - len + k + 1 < 0) || (i + k) >= boardSize ||
                 (j - k < 0) || (j + len - k - 1) >= boardSize)
             continue;
@@ -155,7 +159,7 @@ bool TicTacToe::checkDiagonal(int i, int j, int len) const
         }
         if (res)
             return true;
-    } // Checks all posible diagonal combinations from right to left
+    } // Checks all possible diagonal combinations from right to left
 
     return false;
 }

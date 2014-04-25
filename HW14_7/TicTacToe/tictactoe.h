@@ -33,7 +33,10 @@ private:
     bool checkForWin(int i, int j) const;
     bool checkVerticalHorizontal(int i, int j, int len) const;
     bool checkDiagonal(int i, int j, int len) const;
+    /// Shows MessageBox with
+    /// @param title title and @param text text
     void showMsgBox(QString const &title, QString const &text);
+    /// Places boardSize^2 buttons onto layout.
     void setupButtons();
 
     enum states { Nothing, Cross, Naught };
