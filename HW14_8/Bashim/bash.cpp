@@ -1,4 +1,5 @@
 #include <QLayout>
+#include <QTextCodec>
 
 #include "bash.h"
 #include "ui_bash.h"
@@ -30,6 +31,7 @@ Bash::Bash(QWidget *parent) :
     connect(manager, SIGNAL(finished(QNetworkReply *)),
             this, SLOT(replyFinished(QNetworkReply *)));
     connect(loadButton, SIGNAL(clicked()), this, SLOT(requestQuotes()));
+    connect(quitButton, SIGNAL(clicked()), this, SLOT(close()));
 
 }
 
@@ -40,14 +42,66 @@ Bash::~Bash()
 
 void Bash::requestQuotes()
 {
-    manager->get(QNetworkRequest(QUrl("http://bash.im/rss")));
-    //delete later;
-    xmlReader.addData(networkReply->readAll()); // readyRead()?
+    loadButton->setEnabled(false);
+    loadButton->setText(tr("Next 10"));
+    textEdit->clear();
+    if (networkReply)
+    {
+        networkReply->disconnect(this);
+        networkReply->deleteLater();
+    }
+    networkReply = manager->get(QNetworkRequest(QUrl("http://bash.im/rss/")));
+    connect(networkReply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
 }
 
 void Bash::replyFinished(QNetworkReply *reply)
 {
-    networkReply = reply; // caution, if reply already init'ed
-    connect(networkReply, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
-    //connect(reply, SIGNAL(finished()), reply, SLOT(deleteLater()));
+    Q_UNUSED(reply);
+    loadButton->setEnabled(true);
+}
+
+void Bash::slotReadyRead()
+{
+    int statusCode = networkReply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
+    if (statusCode >= 200 && statusCode < 300)
+    {
+        QByteArray data = networkReply->readAll();
+        QTextCodec *codec = QTextCodec::codecForName("Windows-1251");
+        xmlReader.addData(codec->toUnicode(data));
+        parseXml();
+    }
+}
+
+void Bash::parseXml()
+{
+    int c = 0;
+    while (!xmlReader.atEnd() && c < 10)
+    {
+        xmlReader.readNext();
+        if (xmlReader.isStartElement())
+        {
+            if (xmlReader.name() == "item")
+            {
+                while (!xmlReader.atEnd() && c < 10)
+                {
+                    xmlReader.readNext();
+                    QStringRef token = xmlReader.name();
+                    if (xmlReader.isStartElement() && (token == "title" || token == "pubDate"))
+                    {
+                        xmlReader.readNext();
+                        textEdit->textCursor().insertHtml("<b>" + xmlReader.text().toString() + "<b><br>");
+                    }
+                    if (xmlReader.isCDATA())
+                    {
+                        textEdit->textCursor().insertHtml(xmlReader.text().toString() + "<br><br>");
+                        c++;
+                    }
+                }
+            }
+        }
+    }
+    if (xmlReader.error() && xmlReader.error() != QXmlStreamReader::PrematureEndOfDocumentError)
+    {
+        qWarning() << "XML ERROR:" << xmlReader.lineNumber() << ": " << xmlReader.errorString();
+    }
 }
