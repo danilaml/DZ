@@ -1,7 +1,7 @@
 #include <QLayout>
 #include <QtTest/QTest>
 #include <QMessageBox>
-#include <QDebug>
+#include <cstdlib>
 
 #include "findpair.h"
 #include "ui_findpair.h"
@@ -22,10 +22,14 @@ FindPair::FindPair(QWidget *parent) :
     state = QVector<QVector<int> >(boardSize, QVector<int>(boardSize));
     buttons = QVector<QPushButton*>(boardSize * boardSize);
 
+    int zeros = 0;
+
     QGridLayout *mainLayout = new QGridLayout();
     for (int i = 0; i < boardSize * boardSize; i++)
     {
-        state[i % boardSize][i / boardSize] = i % 2;
+        state[i % boardSize][i / boardSize] = (i == boardSize * boardSize - 1) ? ((zeros + 1) % 2) : (std::rand() % 2);
+        if (state[i % boardSize][i / boardSize] == 0)
+            zeros++;
         QPushButton *tmp = new QPushButton(" ", this);
         buttons[i] = tmp;
 
@@ -53,12 +57,6 @@ FindPair::~FindPair()
 
 void FindPair::stateChanged(int buttonPressed)
 {
-    qDebug() << done;
-    if(done == boardSize * boardSize)
-    {
-        showMsgBox("Congratulations!", "You are the winner!");
-        close();
-    }
     if (!isCompleted)
         return;
     isCompleted = false;
@@ -77,7 +75,11 @@ void FindPair::stateChanged(int buttonPressed)
             disconnect(buttons[buttonPressed], SIGNAL(clicked()), qsm, SLOT(map()));
             disconnect(buttons[lastButton], SIGNAL(clicked()), qsm, SLOT(map()));
             done += 2;
-            qDebug() << done;
+            if(done == boardSize * boardSize)
+            {
+                showMsgBox("Congratulations!", "You are the winner!");
+                close();
+            }
         }
         else
         {
