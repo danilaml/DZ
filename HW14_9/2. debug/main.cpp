@@ -43,6 +43,7 @@ int main()
 {
     Calculator* calc = new Calculator;
     calc->test();
+    //stackTest();
 
     return 0;
 }

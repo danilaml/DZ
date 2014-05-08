@@ -5,8 +5,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-const char Calculator::priorityTable[Calculator::tableSize] = {'*', '/', '+', '-'};
-
 Calculator::Calculator()
 {
     stack = new StackByHeap<char>;
@@ -22,7 +20,6 @@ int Calculator::calc(string expression) throw(int)
 int Calculator::calc(string::iterator &itr)
 {
     char ch = *itr;
-    itr++;
     if (isOperator(ch))
     {
         int operandR = calc(--itr);
@@ -39,6 +36,7 @@ int Calculator::calc(string::iterator &itr)
             return operandL * operandR;
             break;
         case '/':
+	    if (operandR == 0) cout << "div by zero";
             return operandL / operandR;
             break;
         }
@@ -93,7 +91,7 @@ void Calculator::parse(string expression) throw(int)
             else
                 polishExpr += *itr;
         }
-        else  if (ch == '(')
+        else if (ch == '(')
             {
                 stack->push(ch);
                 balance++;
@@ -116,7 +114,7 @@ void Calculator::parse(string expression) throw(int)
             if (!stack->isEmpty())
             {
                 char opr = stack->top();
-                while (!stack->isEmpty() && (opr != '(') && (priority < getPriority(opr)))
+                while (!stack->isEmpty() && (opr != '(') && (priority <= getPriority(opr)))
                 {
                     polishExpr += stack->pop();
                     try
@@ -151,10 +149,19 @@ bool Calculator::permitted(char ch)
 }
 int Calculator::getPriority(char ch)
 {
-    for (int i = 0; i < tableSize; ++i)
-        if (ch== priorityTable[i])
-            return i;
-    return -1;
+    switch(ch)
+        {
+        case '+':
+            return 0;
+        case '-':
+            return 1;
+        case '*':
+            return 2;
+        case '/':
+            return 2;
+	default:
+	    return -1;
+        }
 }
 
 void Calculator::test()

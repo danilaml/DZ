@@ -16,8 +16,6 @@ public:
 public:
     AbstractStack<char>* stack;
     string polishExpr;
-    static const int tableSize = 4;
-    static const char priorityTable[tableSize];
     void parse(string expression) throw(int);
     int calc(string::iterator &itr);
     static bool permitted(char ch);

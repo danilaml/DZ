@@ -23,10 +23,10 @@ public:
         if (isEmpty())
             throw 1;
         Type result = head->getValue();
-        ListElement<Type>* tmp = head;
-        head = head->getNext();
+        ListElement<Type>* tmp = head->getNext(); 
         head->setNext(NULL);
-        delete tmp;
+        delete head;
+	head = tmp;
         return result;
     }
     Type top() throw(int)
