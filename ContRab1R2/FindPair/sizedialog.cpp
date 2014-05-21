@@ -6,6 +6,7 @@ SizeDialog::SizeDialog(QWidget *parent) :
     ui(new Ui::SizeDialog)
 {
     ui->setupUi(this);
+
 }
 
 SizeDialog::~SizeDialog()
@@ -16,4 +17,9 @@ SizeDialog::~SizeDialog()
 void SizeDialog::on_buttonBox_accepted()
 {
     setResult(ui->spinBox->value());
+}
+
+void SizeDialog::on_buttonBox_rejected()
+{
+    setResult(-1);
 }

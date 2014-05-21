@@ -19,6 +19,8 @@ FindPair::FindPair(QWidget *parent) :
 
     SizeDialog *sd = new SizeDialog(this);
     boardSize = sd->exec();
+    if (boardSize == -1)
+        close();
     state = QVector<QVector<int> >(boardSize, QVector<int>(boardSize));
     buttons = QVector<QPushButton*>(boardSize * boardSize);
 
