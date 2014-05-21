@@ -12,11 +12,11 @@ public:
     /// @param ar[] - array to be sorted
     /// @param arlen - array length
     /// @param comp - comparator
-    void sort(T ar[], int arlen, AbstractComparator<T> &comp);
+    void sort(T ar[], int arlen, AbstractComparator<T> const &comp) const;
 };
 
 template<typename T>
-void BubbleSort<T>::sort(T ar[], int arlen, AbstractComparator<T> &comp)
+void BubbleSort<T>::sort(T ar[], int arlen, AbstractComparator<T> const &comp) const
 {
     for (int i = 0; i < arlen; i++)
     {

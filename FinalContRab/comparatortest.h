@@ -7,7 +7,7 @@
 #include "standardcomparator.h"
 #include "reversecomparator.h"
 
-/// Tests standard and reverse comparators with int and double as parametr
+/// Tests standard and reverse comparators with int and double as parameter
 class ComparatorTest : public QObject
 {
     Q_OBJECT
