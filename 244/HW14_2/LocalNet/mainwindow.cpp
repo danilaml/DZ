@@ -56,7 +56,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateCount()
 {
-	this->setWindowTitle(QString("LocalNet: шаг ") + QString::number(step));
+	this->setWindowTitle(QString("LocalNet: шаг %1").arg(step));
 	step++;
 }
 
@@ -101,8 +101,8 @@ void MainWindow::newPcInfected(int id)
 {
 	if (!infected[id])
 	{
-		(ui->plainTextEdit->textCursor().insertText(QString("ПК номер %1 на %2 заражён! "
-															"Шаг: %3\n").arg(id).arg(pcs[id]->os).arg(step - 1)));
+		ui->plainTextEdit->textCursor().insertText(QString("ПК номер %1 на %2 заражён! "
+														   "Шаг: %3\n").arg(id).arg(pcs[id]->os).arg(step - 1));
 		infected[id] = true;
 	}
 	for (uint i = 0; i < number; i++)

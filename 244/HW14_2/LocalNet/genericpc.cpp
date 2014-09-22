@@ -17,7 +17,7 @@ void GenericPC::setTimer(QTimer *tm)
 
 void GenericPC::throwDice()
 {
-	if (std::generate_canonical<double, 10>(re) < vulnerability)
+	if (std::generate_canonical<double, 10>(re) < vulnerability) // buggy in mvsc, mingw works fine
 	{
 		isInfected = true;
 		connect(timer, SIGNAL(timeout()), this, SLOT(infect()));
