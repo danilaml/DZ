@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent) :
 			firstInf[p->id] = true;
 			connect(timer, SIGNAL(timeout()), p, SLOT(infect()));
 		}
-		connect(p, SIGNAL(infected(int)), this, SLOT(newPcInfected(int)));
+		connect(p, SIGNAL(infected(uint)), this, SLOT(newPcInfected(uint)));
 	}
 }
 
@@ -94,15 +94,19 @@ void MainWindow::on_pushButton_2_clicked()
 			p->isInfected = false;
 			disconnect(timer, SIGNAL(timeout()), p, SLOT(infect()));
 		}
+		else
+		{
+			connect(timer, SIGNAL(timeout()), p, SLOT(infect()));
+		}
 	}
 }
 
-void MainWindow::newPcInfected(int id)
+void MainWindow::newPcInfected(uint id)
 {
 	if (!infected[id])
 	{
 		ui->plainTextEdit->textCursor().insertText(QString("ПК номер %1 на %2 заражён! "
-														   "Шаг: %3\n").arg(id).arg(pcs[id]->os).arg(step - 1));
+		                                                   "Шаг: %3\n").arg(id).arg(pcs[id]->os).arg(step - 1));
 		infected[id] = true;
 	}
 	for (uint i = 0; i < number; i++)

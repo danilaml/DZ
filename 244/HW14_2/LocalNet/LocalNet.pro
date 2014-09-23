@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui testlib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,9 +15,11 @@ CONFIG += c++11
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    genericpc.cpp
+    genericpc.cpp \
+    localnettest.cpp
 
 HEADERS  += mainwindow.h \
-    genericpc.h
+    genericpc.h \
+    localnettest.h
 
 FORMS    += mainwindow.ui

@@ -15,13 +15,21 @@ class GenericPC : public QObject
 	Q_OBJECT
 public:
 	explicit GenericPC(QObject *parent = 0);
-	GenericPC(bool isInf, double vuln, uint id, const QString os = "Generic") :
+	/**
+	 * @brief GenericPC construtor for GenericPC
+	 * @param isInf true if infected
+	 * @param vuln chance of getting infected in [0,1]
+	 * @param id pc id
+	 * @param os name of pc os
+	 * @param rsd additional random seed (will be multiplied)
+	 */
+	GenericPC(bool isInf, double vuln, uint id, const QString os = "Generic", uint rsd = 1) :
 		isInfected(isInf),
 		vulnerability(vuln),
 		id(id),
 		os(os)
 	{
-		re.seed(std::chrono::system_clock::now().time_since_epoch().count() * (id + 1));
+		re.seed(std::chrono::system_clock::now().time_since_epoch().count() * (id + 1) * rsd);
 	}
 	~GenericPC();
 
@@ -37,7 +45,7 @@ public:
 	QString const os;
 
 signals:
-	void infected(int);
+	void infected(uint);
 
 public slots:
 	void throwDice();
