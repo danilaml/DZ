@@ -16,7 +16,9 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    robotfield.cpp
+    robotfield.cpp \
+    robotfieldtest.cpp
 
 HEADERS += \
-    robotfield.h
+    robotfield.h \
+    robotfieldtest.h
