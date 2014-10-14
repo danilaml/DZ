@@ -26,7 +26,6 @@ private:
 
 	QVector<QVector<bool> > field;
 	QVector<bool> robots;
-	int robotNum;
 
 };
 

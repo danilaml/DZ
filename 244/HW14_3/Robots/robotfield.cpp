@@ -1,13 +1,8 @@
 #include "robotfield.h"
 #include <QDebug>
 
-RobotField::RobotField(QVector<QVector<bool> > &f, QVector<bool> &r) : field(f), robots(r), robotNum(r.count(true))
+RobotField::RobotField(QVector<QVector<bool> > &f, QVector<bool> &r) : field(f), robots(r)
 {
-	robotNum = 0;
-	for (auto const &el : f)
-	{
-		robotNum += el.count(true);
-	}
 }
 
 bool RobotField::isSelfDestructible() const
