@@ -53,7 +53,7 @@ private slots:
 		timer = new QTimer(this);
 		timer->stop();
 
-		 QSignalMapper *signalMapper = new QSignalMapper(this);
+		QSignalMapper *signalMapper = new QSignalMapper(this);
 
 		for (GenericPC* p : pcs)
 		{
