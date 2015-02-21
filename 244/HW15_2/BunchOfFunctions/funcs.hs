@@ -13,8 +13,8 @@ digitSum num = if (num /= 0)
 
 find :: (Eq a, Num a) => a -> [a] -> Maybe Integer
 find num list = let find' (x : xs) pos = if (x == num)
-                                        then Just pos
-                                        else find' xs (pos + 1)
+                                         then Just pos
+                                         else find' xs (pos + 1)
                     find' [] pos = Nothing
                 in find' list 0
 
