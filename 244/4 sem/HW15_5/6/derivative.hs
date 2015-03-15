@@ -64,7 +64,21 @@ derivative' (Var)       = Const 1
 derivative :: Expression -> Expression
 derivative x = simplify $ derivative' $ simplify x
 
-testexp1 = ((Const 1 :+: Var) :^: 3) :*: ((Var :^: 2) :*: Const 3) -- (1+x)^3 * 3x^2
-testexp2 = (Var :^: 2) :+: (Var :^: 3) :+: Const 1                 -- x^2 + x^3 + 1
+calculate :: Expression -> Int -> Int
+calculate e v = case e of
+    (e1 :+: e2) -> (calculate e1 v) + (calculate e2 v)
+    (e1 :-: e2) -> (calculate e1 v) - (calculate e2 v)
+    (e1 :*: e2) -> (calculate e1 v) * (calculate e2 v)
+    (e :^: n)   -> (calculate e v) ^ n
+    (Const n)   -> n
+    (Var)       -> v
 
-main = print $ derivative testexp2
+testexp1  = ((Const 1 :+: Var) :^: 3) :*: ((Var :^: 2) :*: Const 3) -- (1+x)^3 * 3x^2
+testexp1d = ((Const 9 :*: ((Const 1 :+: Var) :^: 2)) :*: (Var :^: 2)) :+:
+                ((Const 6 :*: ((Const 1 :+: Var) :^: 3)) :*: Var)   -- 9(1+x)^2*x^2 + 6(1+x)^3*x
+testexp2  = (Var :^: 2) :+: (Var :^: 3) :+: Const 1                 -- x^2 + x^3 + 1
+testexp2d = (Const 2 :*: Var) :+: (Const 3 :*: (Var :^: 2))         -- 2x + 3x^2
+
+main = do
+    quickCheck (\s -> calculate (derivative testexp1) s == calculate testexp1d s)
+    quickCheck (\s -> calculate (derivative testexp2) s == calculate testexp2d s)
