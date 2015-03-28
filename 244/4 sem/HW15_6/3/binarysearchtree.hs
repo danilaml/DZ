@@ -1,3 +1,5 @@
+import Test.HUnit
+
 data BinarySearchTree a = Empty
                         | Node a (BinarySearchTree a) (BinarySearchTree a)
                         deriving (Eq, Show)
@@ -41,3 +43,13 @@ treeSize (Empty)      = 0
 treeHeight :: BinarySearchTree a -> Int
 treeHeight (Node x l r) = 1 + max (treeHeight l) (treeHeight r)
 treeHeight (Empty)      = 0
+
+testtree = Empty `addElem` 1 `addElem` 2 `addElem` 0 `addElem` 12 `addElem` 8
+test1 = TestCase $ assertEqual "height" 4 $ treeHeight testtree
+test2 = TestCase $ assertEqual "size" 5 $ treeSize testtree
+test3 = TestCase $ assertBool "remove 1" $ not $ findElem (removeElem testtree 1) 1
+test4 = TestCase $ assertBool "add 3" $ findElem (addElem testtree 3) 3
+tests = TestList [TestLabel "test1" test1, TestLabel "test2" test2
+                    , TestLabel "test3" test3, TestLabel "test4" test4]
+
+main = do runTestTT tests
