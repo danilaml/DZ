@@ -4,4 +4,4 @@ check n (x:xs)
     | otherwise = True
 
 infiprime :: [Int]
-infiprime = 2 : 3 : [ x | x <- [5..], check x infiprime
+infiprime = 2 : 3 : [ x | x <- [5..], check x infiprime]
