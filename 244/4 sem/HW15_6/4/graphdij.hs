@@ -1,4 +1,5 @@
 import Control.Monad.State
+import Test.QuickCheck
 
 data Graph v e = Graph [(Int,v)] [(Int,Int,e)]
 
@@ -11,8 +12,8 @@ findMin (l:ls) = let findHelp ((x,y):xs) (x1,y1) = if y < y1
                                                    else findHelp xs (x1, y1)
                      findHelp [] m = m in findHelp ls l
 
-dijkstra' :: Graph Int Int -> Int -> [(Int, Int)]
-dijkstra' g@(Graph v e) src
+dijkstra' :: [(Int,Int)] -> [(Int,Int,Int)] -> Int -> [(Int, Int)]
+dijkstra' v e src
     | length v == 1 = v
     | otherwise  = case (lookup src v) of
                     Nothing -> error "No such src"
@@ -30,10 +31,12 @@ dijkstra' g@(Graph v e) src
                                      helper [] = return []
                                  in
                                  let newV = filter (\(x,y) -> x /= src) (execState (helper e) v) in
-                                 let p = findMin newV in (findMin v):(dijkstra' (Graph newV e) (fst p))
+                                 let p = findMin newV in (findMin v):(dijkstra' newV e (fst p))
 
-dijkstra :: Graph Int Int -> Int -> [(Int, Int)]
-dijkstra (Graph v e) src = dijkstra' (Graph (map (\(x,y) -> if x == src then (x, 0) else (x, inf)) v) e) src
+dijkstra :: Graph v Int -> Int -> [(Int, Int)]
+dijkstra (Graph v e) src = dijkstra' (map (\(x,y) -> if x == src then (x, 0) else (x, inf)) v) e src
 
 inf = maxBound :: Int
 testgraph = Graph [(0, 0), (1, 0), (2, 0)] [(0,1,8), (1,2,3), (0,2,13)] :: Graph Int Int
+
+main = quickCheck (dijkstra testgraph 0 == [(0,0), (1,8), (2,11)])
