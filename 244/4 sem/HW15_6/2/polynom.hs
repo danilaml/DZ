@@ -30,7 +30,7 @@ plus (P l1) (P l2) = let plushelp (x:xs) (l:ls) = (x + l) : plushelp xs ls
 
 minus :: Polynom -> Polynom -> Polynom
 minus (P l1) (P l2) = let minushelp (x:xs) (l:ls) = (x - l) : minushelp xs ls
-                          minushelp [] l = l
+                          minushelp [] l = map (0-) l
                           minushelp l [] = l
                       in P (minushelp l1 l2)
                       
@@ -49,4 +49,5 @@ testexp3 = P [0,11,24,59,10]  -- 11x + 24x^2 + 59x^3 + 10x^4 (testexp1 * testexp
 
 main = do
     quickCheck (\s -> calculate (plus testexp1 testexp2) s == 11 + 3*s + 2*s^2 + 5*s^3)
+    quickCheck (\s -> calculate (minus testexp2 testexp1) s == 11 + s - 2*s^2 - 5*s^3)
     quickCheck (\s -> calculate (multiply testexp1 testexp2) s == calculate testexp3 s)
