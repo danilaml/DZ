@@ -1,4 +1,5 @@
 import Data.Char
+import Control.Monad.State
 
 data HashTable k v = HashTable {hash :: (k -> Int), table :: [(Int, v)]}
 
@@ -20,6 +21,14 @@ remove k v (HashTable f t) = let h = f k in
                                  remh [] = []
                              in HashTable f (remh t)
 
+addSt k v = do
+            hashtb <- get
+            put $ add k v hashtb
+         
+removeSt k v = do
+            hashtb <- get
+            put $ remove k v hashtb
+
 find :: k -> HashTable k v -> Maybe v
 find k (HashTable f t) = let h = f k in
                          let findh tb@((x,y):xs)
@@ -31,3 +40,5 @@ find k (HashTable f t) = let h = f k in
 
 hasht = add "a" "b" $ add "11" "11" $ add "test2" "test2" $ add "test1" "!" $ add "test" "0" emptyh
     where emptyh = HashTable (\x -> (foldl (\s t -> s + (ord t)) 0 x) `mod` 127) []
+    
+main = putStrLn $ show $ table $ execState (addSt "state" "state") hasht
