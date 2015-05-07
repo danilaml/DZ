@@ -1,4 +1,3 @@
-import Control.Monad.State
 import Data.Char
 
 data HashTable k v = HashTable {hash :: (k -> Int), table :: [(Int, v)]}
